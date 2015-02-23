@@ -22,6 +22,10 @@ public class scoreManagement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		endGameUI = GameObject.Find("EndCamera");
+//print (endGameUI.transform.name);
+		endGameText = endGameUI.transform.GetChild(0).GetComponent<Text>();
+		//endGameUI.SetActive(false);
 		endScript = GetComponent<endGameContinue>();
 		Invoke("SetupLists", 0.1f);
 		if (tutorial){
@@ -96,12 +100,11 @@ public class scoreManagement : MonoBehaviour {
 	}
 	
 	void ListenForReturn(){
-		
-		if (Input.GetButton("Fire1P1") && Input.GetButton("Fire2P1") && Input.GetButton("Fire1P2") && Input.GetButton("Fire2P2")){
+		if (Input.GetButtonUp("Submit") || Input.GetButtonUp("SubmitMAC")){
 			if (!tutorial){
 				Application.LoadLevel(0);
 			}else{
-				Application.LoadLevel(Application.loadedLevel+1);
+				Application.LoadLevel(nextLevel);
 			}
 		}
 	}

@@ -7,10 +7,12 @@ public class NewPauseMenu : MonoBehaviour {
 
 	public bool onMac;
 	public bool paused = false;
+	public GameObject pauseCamera;
+	
 	public Slider volSlider;
 	public Slider sens1, sens2;
 	public Toggle inv1, inv2;
-	public GameObject pauseCamera;
+	
 	public GameObject pauseCanvas;
 	public GameObject winCanvas;
 	public GameObject[] menuObjects;
@@ -21,8 +23,26 @@ public class NewPauseMenu : MonoBehaviour {
 	public MouseLook player1PlayerLook, player2PlayerLook;
 	public float sensitivityModifier = 16f;
 
+	void SetupReferences(){
+		pauseCamera = GameObject.Find("EndCamera");	
+		pauseCanvas = pauseCamera.transform.GetChild(1).gameObject;
+		winCanvas = pauseCamera.transform.GetChild(0).gameObject;
+		eventSystem = pauseCamera.transform.GetChild(2).GetComponent<EventSystem>();
+		for (int i = 0; i<4; i++){
+			menuObjects[i] = pauseCanvas.transform.GetChild(i+1).gameObject;
+			firstButtons[i] = menuObjects[i].transform.GetChild(0).gameObject;
+		}
+		player1Cam = GameObject.FindGameObjectWithTag("player1").transform.GetChild(0).gameObject;
+		player2Cam = GameObject.FindGameObjectWithTag("player2").transform.GetChild(0).gameObject;
+		volSlider = menuObjects[1].transform.GetChild(1).GetComponent<Slider>();
+		sens1 = menuObjects[1].transform.GetChild(2).GetComponent<Slider>();
+		sens2 = menuObjects[1].transform.GetChild(3).GetComponent<Slider>();
+		pauseCamera.SetActive(false);
+	}
+	
 	// Use this for initialization
 	void Start () {
+		SetupReferences();
 		volSlider.value = 0.5f;
 		volSlider.onValueChanged.AddListener(VolumeChange);
 		sens1.onValueChanged.AddListener(SetSensitivity1);
@@ -93,6 +113,14 @@ public class NewPauseMenu : MonoBehaviour {
 			player2PlayerLook.sensitivityY = newSensitivity * sensitivityModifier;
 			player2MouseLook.sensitivityX = newSensitivity * sensitivityModifier;
 			player2MouseLook.sensitivityY = newSensitivity * sensitivityModifier;
+	}
+	
+	public void ResetLevel(){
+		Application.LoadLevel(Application.loadedLevel);
+	}
+	
+	public void ResetGame(){
+		Application.LoadLevel(0);
 	}
 	
 	public void ToggleInvert(int playerNum){

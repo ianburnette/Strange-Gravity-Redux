@@ -74,7 +74,7 @@ public class FirstPersonDrifter: MonoBehaviour
     void FixedUpdate() {
 		float inputX = 0;
 		float inputY = 0;
-		if (playerNumber == 0 && !onMac){
+		if (playerNumber == 0 /*  !onMac */){
 			inputX = Input.GetAxis("HorizontalP1");
 			inputY = Input.GetAxis("VerticalP1");
 			if (inputX == 0){
@@ -83,18 +83,18 @@ public class FirstPersonDrifter: MonoBehaviour
 			if (inputY == 0){
 				inputY = Input.GetAxis("Vertical");
 			}
-		}else if (playerNumber == 0 && onMac){
+		}/* else if (playerNumber == 0 && onMac){
 			inputX = Input.GetAxis("HorizontalP1MAC");
 			inputY = Input.GetAxis("VerticalP1MAC");
-		}
-		else if (playerNumber == 1 && !onMac){
+		} */
+		else if (playerNumber == 1/*  && !onMac */){
 			inputX = Input.GetAxis("HorizontalP2");
 			inputY = Input.GetAxis("VerticalP2");
 		}
-		else if (playerNumber == 1 && onMac){
+	/* 	else if (playerNumber == 1 && onMac){
 			inputX = Input.GetAxis("HorizontalP2MAC");
 			inputY = Input.GetAxis("VerticalP2MAC");
-		}
+		} */
 		anim.SetFloat("speed", inputY);
         // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
         float inputModifyFactor = (inputX != 0.0f && inputY != 0.0f && limitDiagonalSpeed)? .7071f : 1.0f;

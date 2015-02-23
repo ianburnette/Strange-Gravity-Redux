@@ -12,7 +12,12 @@ public class platformManagement : MonoBehaviour {
 	NewPauseMenu pauseMenu;
 
 	// Use this for initialization
-	void Start () {
+	public void SetupPlatform (bool onMacGlobal) {
+		onMac = onMacGlobal;
+		print ("platformSetup " + onMac);
+		player1 = GameObject.FindGameObjectWithTag("player1").transform;
+		player2 = GameObject.FindGameObjectWithTag("player2").transform;
+		
 		pauseMenu = GetComponent<NewPauseMenu>();
 		player1Mouse = player1.GetComponent<MouseLook>();
 		player2Mouse = player2.GetComponent<MouseLook>();	
@@ -25,7 +30,7 @@ public class platformManagement : MonoBehaviour {
 		selector1 = player1.GetChild(0).gameObject.GetComponent<newSelector>();
 		selector2 = player2.GetChild(0).gameObject.GetComponent<newSelector>();
 	
-		if (onMac){
+		if (onMac == true){
 			player1Mouse.onMac=true;
 			player2Mouse.onMac=true;
 			camera1Mouse.onMac=true;

@@ -8,6 +8,8 @@ public class multiplayerMenuControls : MonoBehaviour {
 	public GameObject[] screens;
 	public GameObject[] firstButtons;
 	public EventSystem eventSystem;
+	public GameObject tutorialObject;
+	public int levelToBegin;
 	
 	// Use this for initialization
 	void Start () {
@@ -33,8 +35,23 @@ public class multiplayerMenuControls : MonoBehaviour {
 	}
 	
 	public void StartLevel(int levelToStart){
-		Application.LoadLevel(Application.loadedLevel+levelToStart);
+		levelToBegin = levelToStart;
+		ShowScreen(2);
 	}
 	
+	public void StartSelectedLevel(){
+		Application.LoadLevel(levelToBegin);
+	}
+	
+	public void StartTutorial(){
+		GameObject newTutorialObject = (GameObject)Instantiate(tutorialObject, Vector3.zero, Quaternion.identity);
+		newTutorialObject.GetComponent<NextLevel>().nextLevelInt = levelToBegin;
+		DontDestroyOnLoad(newTutorialObject);
+		Application.LoadLevel(1);
+	}
+	
+	public void QuitGame(){
+		Application.Quit();
+	}
 	
 }
