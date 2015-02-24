@@ -89,6 +89,7 @@ public class NewPauseMenu : MonoBehaviour {
 			pauseCanvas.SetActive(false);
 			winCanvas.SetActive(true);
 			Time.timeScale = 1;
+			eventSystem.SetSelectedGameObject(firstButtons[0]);
 		}else{
 			paused = true;
 			pauseCamera.SetActive(true);
@@ -116,10 +117,12 @@ public class NewPauseMenu : MonoBehaviour {
 	}
 	
 	public void ResetLevel(){
+		TogglePause();
 		Application.LoadLevel(Application.loadedLevel);
 	}
 	
 	public void ResetGame(){
+		TogglePause();
 		Application.LoadLevel(0);
 	}
 	
@@ -132,6 +135,6 @@ public class NewPauseMenu : MonoBehaviour {
 	}
 	
 	public void VolumeChange(float volume){
-		AudioListener.volume = volSlider.value;
+		AudioListener.volume = volSlider.value * 2;
 	}
 }

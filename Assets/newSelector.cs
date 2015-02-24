@@ -83,7 +83,7 @@ public class newSelector : MonoBehaviour {
 						soundScript.PlayDeselect();
 					}
 				}else if (selectHit.transform.tag == "floor"){
-					print ("hit " + selectHit.transform.name);
+					//print ("hit " + selectHit.transform.name);
 					selectedPlanetsScript.DeselectAll();
 				/* 	selectHit.transform.parent.GetComponent<newHighlightScript>().StopSelecting(alignment);
 					selectHit.transform.parent.GetComponent<newHighlightScript>().Highlight(1,alignment); */
@@ -122,7 +122,7 @@ public class newSelector : MonoBehaviour {
 	void CheckToHighlight(){
 		//AM I HITTING SOMETHING?
 		if (Physics.Raycast (transform.position, transform.forward, out highlightHit, range, mask)){
-			if (highlightHit.transform.tag != "floor"){ // NOT JUST HITTING THE FLOOR
+			if (highlightHit.transform.tag != "floor" && highlightHit.transform.name != "ravine"){ // NOT JUST HITTING THE FLOOR
 				currentlyHighlightedPlanet = highlightHit.transform; // PLANET I'M HOVERING OVER IS CURRENTHIGHLIGHTED
 				if (lastSelectedPlanet!=currentlyHighlightedPlanet){ //
 					if (lastSelectedPlanet!=null){
@@ -150,12 +150,13 @@ public class newSelector : MonoBehaviour {
 								currentlyHighlightedPlanet.transform.parent.GetComponent<newHighlightScript>().Highlight(4);
 							} */
 				}
-			}else{ // if I am hitting floor
+			}else { // if I am hitting floor
 				currentlyHighlightedPlanet = null;
 			}
 		}
 		// I'M NOT HITTING ANYTHING
 		else{
+			print ("hitting nothing");
 			currentlyHighlightedPlanet = null;
 		}
 		// UNHIGHLIGHT CURRENT HIGHLIGHTED PLANET

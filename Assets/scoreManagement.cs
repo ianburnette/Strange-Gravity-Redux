@@ -18,13 +18,14 @@ public class scoreManagement : MonoBehaviour {
 	public string[] winTexts;
 	bool listen = false;
 	public GameObject[] signs;
+	bool ended;
 	public tutorialLogic[] logicScripts;
 
 	// Use this for initialization
 	void Start () {
 		endGameUI = GameObject.Find("EndCamera");
 //print (endGameUI.transform.name);
-		endGameText = endGameUI.transform.GetChild(0).GetComponent<Text>();
+		endGameText = endGameUI.transform.GetChild(0).GetChild(1).GetComponent<Text>();
 		//endGameUI.SetActive(false);
 		endScript = GetComponent<endGameContinue>();
 		Invoke("SetupLists", 0.1f);
@@ -82,21 +83,28 @@ public class scoreManagement : MonoBehaviour {
 			yield return new WaitForSeconds (timeBeforeEnd);
 			endGameUI.SetActive(true);
 			endGameText.text = "Tutorial Complete";
+			endGameUI.transform.GetChild(0).GetChild(2).GetComponent<Text>().text = "Press the [X] button to continue.";
+			endGameUI.transform.GetChild(0).GetChild(3).gameObject.SetActive(false);
 			listen = true;
 			GetComponent<playerSounds>().WinLevel();
 		}	
 	}
 	
 	void Update(){
+		if (Input.GetButtonUp("Submit") || Input.GetButtonUp("SubmitMAC")){
+			//print ("pressed submit");
+		}
 		if (listen){
 			ListenForReturn();
 		}
 		if (tutorial){
-			if (logicScripts[0].ready && logicScripts[1].ready){
+			if (logicScripts[0].ready && logicScripts[1].ready && !ended){
 				//print ("both ready");
 				StartCoroutine("EndGame", 0);
+				ended = true;
 			}
 		}
+			//ListenForReturn();
 	}
 	
 	void ListenForReturn(){
@@ -106,6 +114,15 @@ public class scoreManagement : MonoBehaviour {
 			}else{
 				Application.LoadLevel(nextLevel);
 			}
+			//print ("pressed submit");
+		}
+		if (Input.GetButtonUp("Cancel") || Input.GetButtonUp("CancelMAC")){
+			if (!tutorial){
+				Application.LoadLevel(Application.loadedLevel);
+			}else{
+				//Application.LoadLevel(nextLevel);
+			}
+			//print ("pressed submit");
 		}
 	}
 }

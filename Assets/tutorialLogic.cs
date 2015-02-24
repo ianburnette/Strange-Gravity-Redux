@@ -19,27 +19,32 @@ public class tutorialLogic : MonoBehaviour {
 	
 	void Update(){
 		signImage.renderer.material.SetTexture("_MainTex", signTextures[textureIndex]);
-		if (selectedScript.selectedPlanetList.Count != 0 && textureIndex == 0){
+		if (planet1.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment != playerNumber 
+			&& planet2.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment != playerNumber 
+			&& planet3.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment != playerNumber){
+			textureIndex = 6;
+		}
+		else if (selectedScript.selectedPlanetList.Count != 0 && textureIndex == 0){
 			print ("more than one");
 			if (selectedScript.selectedPlanetList[0] == planet1){
 				NextImage();
 			}
 		}
-		if (textureIndex == 1 && planet2.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment == playerNumber){
+		else if (textureIndex == 1 && planet2.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment == playerNumber){
 			NextImage();
 		}
-		if (textureIndex == 2){
+		else if (textureIndex == 2){
 			int totalSpores = planet1.parent.GetComponent<newSporeCount>().currentCount + planet2.parent.GetComponent<newSporeCount>().currentCount;
 			if (totalSpores > planet3.parent.GetComponent<newSporeCount>().currentCount){
 				NextImage();
 			}
 		}
-		if (textureIndex == 3){
+		else if (textureIndex == 3){
 			if (selectedScript.doubleSelectedPlanetList.Count == 2){
 				NextImage();
 			}
 		}
-		if (textureIndex == 4){
+		else if (textureIndex == 4){
 			if (planet3.parent.GetComponent<newPlanetAlignment>().myCurrentAlignment == playerNumber){
 				NextImage();
 				ready = true;

@@ -13,7 +13,7 @@ public class multiplayerMenuControls : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-	
+		eventSystem.SetSelectedGameObject(firstButtons[0]);
 	}
 	
 	// Update is called once per frame

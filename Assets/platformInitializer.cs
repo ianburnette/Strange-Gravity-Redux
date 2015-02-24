@@ -16,8 +16,8 @@ public class platformInitializer : MonoBehaviour {
 		}
 		else{
 			GameObject[] inits = GameObject.FindGameObjectsWithTag("init");
-			if (inits.Length > 1){
-				Destroy(gameObject);
+			if (inits.Length > 1 && inits[1] != gameObject){
+				Destroy(inits[1]);
 			}
 		}
 	}
